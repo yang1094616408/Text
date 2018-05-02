@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Vue入门练习</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  </head>
+    <style type="text/css">
+        body,button,input {
+          font: 16px "Microsoft YaHei";
+        }
+    </style>
+  <body>
+    <div class="yincang" onclick="yincang()" >点我隐藏</div>
+    <div id="root" class="yincang">
+      <button @click="dianji">{{mag}}</button>
+      <p v-show="ssss">{{mag0}}</p>
+      <p v-if="ssss">{{mag1}}</p>      <!-- 插值表达式 -->
+      <p v-html="mag2"></p>           <!-- Vue命令v-html 将html标签转义去掉后插入--> 
+      <p v-text="mag3"></p>            <!-- Vue命令v-text 原文插入-->
+      <p v-bind:title="mag4">千金散尽还复来</p>
+      <p v-show="ssss">{{mag7}}</p>
+      <input v-model:value="mag5" />
+      <br/>
+      <input v-model:value="mag6" />
+          <!-- 
+              :或v-bind:是单向绑定，
+              v-model:是双向数据绑定 ，
+          -->
+      <p>{{sdfc}}</p>   
+      <p>与尔同消万古愁！</p>
+      <p>我记录了文章修改次数：{{cume}}</p>    
+    </div>
+
+    <div id="jishibu">
+      <input  v-model="masg"/>
+      <button @click="baocun">点击保存</button>
+      <ul>
+        <li v-for="(ite) of list">{{ite}}</li>
+      </ul>
+    </div>
+    <script>
+        new Vue({
+          el:"#jishibu",
+          data:{
+            list:[],
+            masg:" ",
+          },
+          methods:{
+            baocun:function () {
+              this.list.push(this.masg);
+              this.masg="";
+            }
+          }
+        })
+
+        new Vue({
+          el:"#root",
+          data:{
+            mag:"请点我查看完整版《将进酒》",
+            mag0:"君不见，黄河之水天上来，奔流到海不复回。君不见，高堂明镜悲白发，朝如青丝暮成雪",
+            mag1:"人生得意须尽欢！",
+            mag2:"<e>莫使金樽空对月</e>",
+            mag3:"天生我材必有用",
+            mag4:"写的内容是：千金散尽还复来",
+            mag7:"烹羊宰牛且为乐，会须一饮三百杯。岑夫子，丹丘生，将进酒，杯莫停。与君歌一曲，请君为我倾耳听。钟鼓馔玉不足贵，但愿长醉不复醒。古来圣贤皆寂寞，惟有饮者留其名。陈王昔时宴平乐，斗酒十千恣欢谑。主人何为言少钱，径须沽取对君酌",
+            mag5:"五花马，千金裘",
+            mag6:"呼儿将出换美酒",
+            cume:0,
+            ssss:false,
+          },
+          //template:'<h1>He ll o Wor ld!</h1>', //模板，英语也是模板的意思。
+          methods:{ /*方法体*/
+              dianji:function () {
+              this.ssss=!this.ssss;
+            }
+          },
+          computed:{ /*计算器*/
+            sdfc:function () {
+              return this.mag5+' '+this.mag6;
+            }
+          },
+          watch:{  /*监听器*/
+            sdfc:function () {
+              this.cume++;
+            }
+          },
+        })
+        function yincang() {
+          document.getElementById("root").style.display = 'none';
+          document.getElementsByClassName("yincang")[0].style.display = 'none';
+        }
+    </script>
+  </body>
+</html>
